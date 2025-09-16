@@ -1,0 +1,106 @@
+{% extends "index.html" %}
+{% load static %}
+
+{% block content %}
+<section class="bg-white text-gray-600">
+    <div class="container flex flex-col items-center gap-y-12">
+        <div>
+            <p class="hero__text font-Winky text-2xl">Every one need MAKE UP</p>
+        </div>
+
+        <!-- menu of categories -->
+        <div class="flex flex-wrap justify-center gap-6 md:flex-nowrap md:justify-between gap-x-12">
+            {% for category in categories %}
+            <div class="menu__card flex flex-col items-center gap-y-2">
+                <a href="{% url 'products:product_list_by_category' category.id %}">
+                    {% if category.image %}
+                    <img src="{{ category.image.url }}" alt="{{ category.name }}"
+                        class="w-16 h-16 rounded-full transition-transform duration-300 ease-out hover:scale-110 hover:opacity-95 object-cover">
+                    {% else %}
+                    <img src="{% static 'img/eye/placeholder.jpg' %}" alt="placeholder"
+                        class="w-16 h-16 rounded-full transition-transform duration-300 ease-out hover:scale-110 hover:opacity-95 object-cover">
+                    {% endif %}
+                </a>
+                <p class="hover:opacity-95">{{ category.name }}</p>
+            </div>
+            {% empty %}
+            <p class="text-red-500">هیچ دسته‌بندی یافت نشد. لطفاً دسته‌بندی اضافه کنید.</p>
+            {% endfor %}
+        </div>
+
+        <!-- main home -->
+        <div class="grid grid-cols-4 grid-rows-2 lg:gap-x-10 gap-x-4 lg:gap-y-4 gap-y-1 w-full max-w-6xl h-[80vh] pt-5">
+            <div
+                class="main__img_1 sm:col-span-2 sm:row-span-2 col-span-4 row-span-2 flex items-center justify-center flex-col px-8 sm:p-0">
+                <img src="{% static 'img/face_home_2.jpg' %}" alt="face-image"
+                    class="w-full h-full object-cover object-top">
+                <div class="text-gray-600 font-Zain text-sm lg:text-base text-center p-2" dir="rtl">
+                    ! زیبایی، جلوه‌ای از اعتماد به نفس است؛ بدرخش همانطور که هستی
+                </div>
+            </div>
+                <div class="main__img_2 sm:col-span-2 sm:row-span-1 sm:flex flex-col items-center justify-center hidden">
+                    <img src="{% static 'img/skin_home-1.jpg' %}" alt="makeup-image" class="w-full h-full object-cover">
+                    <div class="text-gray-600 font-Zain text-sm lg:text-base text-center p-2" dir="rtl">
+                        !حس دوباره جوانی با انتخابی شایسته
+                    </div>
+                </div>
+                <div
+                    class="main__img_2 sm:col-span-2 sm:row-span-1 sm:flex flex-col items-center justify-center translate-y-10 hidden">
+                    <img src="{% static 'img/skin_home.jpg' %}" alt="skin-image" class="w-full h-full object-cover">
+                    <div class="text-gray-600 font-Zain text-sm lg:text-base text-center p-2" dir="rtl">
+                        پوستی شاداب، راز درخشش طبیعی.
+                    </div>
+                </div>
+        </div>
+</section>
+
+<!-- review - most popular products -->
+<section id="review" class="container relative overflow-hidden mb-20 md:mb-28 text-gray-400 sm:mt-10">
+    <div class="flex flex-col items-center gap-3 text-center mb-10 md:mb-20">
+        <h2 class="about__title md:text-xl text-lg font-bold">پرفروش‌ترین محصولات</h2>
+        <p class="about__title_1 max-w-2xl text-rose-200">محبوب‌ترین برندها</p>
+    </div>
+
+    <div class="popular__slider container bg-white">
+        <div class="swiper py-12">
+            <ul class="swiper-wrapper">
+                {% for product in bestsellers %}
+                <li class="swiper-slide">
+                    <div
+                        class="flex flex-col gap-5 bg-white border-rose-200 border-2 rounded-md p-6 hover:cursor-pointer">
+                        <div class="flex flex-col items-center gap-2">
+                            {% if product.image %}
+                            <img src="{{ product.image.url }}" alt="{{ product.name }}"
+                                class="w-48 h-52 rounded-sm object-cover">
+                            {% else %}
+                            <img src="{% static 'img/eye/placeholder.jpg' %}" alt="placeholder"
+                                class="w-48 h-52 rounded-sm object-cover">
+                            {% endif %}
+                            <div class="ml-2 flex flex-col items-center">
+                                <p class="text-yellow-500 uppercase font-Baloo">{{ product.name }}</p>
+                                <p class="flex flex-row-reverse gap-1">
+                                    <span>{{ product.price }}</span>
+                                    <span>تومان</span>
+                                </p>
+                            </div>
+                            <button class="btn btn-sm btn-visit w-40 lg:w-auto mx-auto lg:mx-0">
+                                <a href="{% url 'products:product_detail' product.id %}">بازدید</a>
+                            </button>
+                            <button class="bg-white text-lg rounded-sm px-2 py-1 border-b-2 shadow-sm btn-shop ml-auto">
+                                <a href="{% url 'orders:cart_add' product.id %}"><i
+                                        class="ri-shopping-cart-fill"></i></a>
+                            </button>
+                        </div>
+                    </div>
+                </li>
+                {% empty %}
+                <li class="swiper-slide">
+                    <p class="text-gray-500 text-center">هیچ محصول پر‌فروشی یافت نشد.</p>
+                </li>
+                {% endfor %}
+            </ul>
+            <div class="swiper-pagination"></div>
+        </div>
+    </div>
+</section>
+{% endblock content %}
