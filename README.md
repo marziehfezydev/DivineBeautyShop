@@ -165,9 +165,4 @@ DivineBeautyShop/
 - اتصال درگاه پرداخت آنلاین  
 - پیاده‌سازی کامل بخش محصولات و سبد خرید
 
----
 
-## 📧 Contact / تماس
-
-**sajjadhossein**  
-📩 Email: [sajjadhosseinrezaei@yahoo.com](mailto:sajjadhosseinrezaei@yahoo.com)
